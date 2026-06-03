@@ -98,7 +98,7 @@ public class VendaController implements Initializable { // CORREÇÃO: Adicionad
             produtoDAO.finalizarVenda(novaVenda, itensNoCarrinho, cupomAtual);
 
             exibirAlerta(Alert.AlertType.INFORMATION, "Venda Concluída",
-                    "A venda foi registrada com sucesso!\nO estoque e os cupons foram atualizados.");
+                    "A venda foi registrada com sucesso!\nO estoque foi atualizado.");
 
             limparTelaVenda();
 
