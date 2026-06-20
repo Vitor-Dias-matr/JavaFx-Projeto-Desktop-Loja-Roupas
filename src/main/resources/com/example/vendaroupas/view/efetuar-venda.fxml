@@ -24,6 +24,7 @@
                 </font>
             </Label>
             <Button fx:id="btnGerenciarProdutos" onAction="#irParaGerenciarProdutos" text="Estoque" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-cursor: hand;" />
+            <Button fx:id="btnGerenciarCupons" onAction="#irParaGerenciarCupons" text="Cupons" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-cursor: hand;" />
         </HBox>
 
         <VBox spacing="5.0">

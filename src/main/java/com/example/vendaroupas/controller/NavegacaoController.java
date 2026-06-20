@@ -20,6 +20,10 @@ public class NavegacaoController {
         trocarCena(stage, "gerenciar-produtos.fxml", "Sistema de Loja - Gerenciar Estoque");
     }
 
+    public void exibirTelaCupons(Stage stage) throws IOException {
+        trocarCena(stage, "gerenciar-cupons.fxml", "Sistema de Loja - Gerenciar Cupons");
+    }
+
     private void trocarCena(Stage stage, String arquivoFxml, String titulo) throws IOException {
         FXMLLoader carregador = new FXMLLoader(HelloApplication.class.getResource(arquivoFxml));
         stage.setScene(new Scene(carregador.load(), 1024, 600));

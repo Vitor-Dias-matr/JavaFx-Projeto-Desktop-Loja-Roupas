@@ -1,6 +1,7 @@
 package com.example.vendaroupas.view;
 
 import com.example.vendaroupas.model.Cupom;
+import com.example.vendaroupas.model.CupomDAO;
 import com.example.vendaroupas.model.ItemVenda;
 import com.example.vendaroupas.model.Produto;
 import com.example.vendaroupas.model.Venda;
@@ -9,6 +10,7 @@ import com.example.vendaroupas.model.ProdutoDAO;
 
 // IMPORTS QUE ESTAVAM FALTANDO:
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class VendaViewController implements Initializable {
 
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final CupomDAO cupomDAO = new CupomDAO();
     private final NavegacaoController navegacaoController = new NavegacaoController();
 
     // Componentes injetados do arquivo FXML
@@ -179,7 +182,35 @@ public class VendaViewController implements Initializable {
 
     @FXML
     public void aoAplicarCupom() {
-        // TODO:  Implementação futura para validar cupom
+        String codigo = txtCupom.getText().trim();
+        if (codigo.isEmpty()) {
+            cupomAtual = null;
+            atualizarTotaisDaVenda();
+            exibirAlerta(Alert.AlertType.WARNING, "Validação do cupom", "Cupom não existe");
+            return;
+        }
+
+        try {
+            Cupom cupom = cupomDAO.buscarPorCodigo(codigo);
+            if (cupom == null) {
+                cupomAtual = null;
+                atualizarTotaisDaVenda();
+                exibirAlerta(Alert.AlertType.WARNING, "Validação do cupom", "Cupom não existe");
+            } else if (!cupom.isValid()) {
+                cupomAtual = null;
+                atualizarTotaisDaVenda();
+                exibirAlerta(Alert.AlertType.WARNING, "Validação do cupom", "Cupom expirado");
+            } else {
+                cupomAtual = cupom;
+                txtCupom.setText(cupom.getCodigo());
+                atualizarTotaisDaVenda();
+                exibirAlerta(Alert.AlertType.INFORMATION, "Validação do cupom", "Cupom aplicado com sucesso");
+            }
+        } catch (SQLException e) {
+            cupomAtual = null;
+            atualizarTotaisDaVenda();
+            exibirAlerta(Alert.AlertType.ERROR, "Erro de conexão", "Não foi possível validar o cupom.");
+        }
     }
 
     @FXML
@@ -191,6 +222,17 @@ public class VendaViewController implements Initializable {
             e.printStackTrace();
             exibirAlerta(Alert.AlertType.ERROR, "Erro de Navegação",
                     "Não foi possível carregar a tela de estoque: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void irParaGerenciarCupons() {
+        try {
+            javafx.stage.Stage stage = (javafx.stage.Stage) cbFormaPagamento.getScene().getWindow();
+            navegacaoController.exibirTelaCupons(stage);
+        } catch (Exception e) {
+            exibirAlerta(Alert.AlertType.ERROR, "Erro de Navegação",
+                    "Não foi possível carregar a tela de cupons: " + e.getMessage());
         }
     }
 

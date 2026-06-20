@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="600.0" prefWidth="1024.0" spacing="20.0" style="-fx-background-color: #f4f4f9;"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.vendaroupas.view.CupomViewController">
+    <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+
+    <VBox prefWidth="330" spacing="14" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+        <Label text="Cadastrar Cupom" textFill="#2c3e50"><font><Font name="System Bold" size="20" /></font></Label>
+        <VBox spacing="5">
+            <Label text="Nome do cupom:" textFill="#7f8c8d" />
+            <TextField fx:id="txtCodigo" promptText="Ex.: DESCONTO10" />
+        </VBox>
+        <VBox spacing="5">
+            <Label text="Porcentagem de desconto:" textFill="#7f8c8d" />
+            <TextField fx:id="txtPorcentagem" promptText="Ex.: 10" />
+        </VBox>
+        <VBox spacing="5">
+            <Label text="Data de validade:" textFill="#7f8c8d" />
+            <DatePicker fx:id="dpDataValidade" maxWidth="Infinity" promptText="Selecione a data" />
+        </VBox>
+        <CheckBox fx:id="chkAtivo" selected="true" text="Cupom ativo" />
+        <HBox spacing="8">
+            <Button onAction="#aoSalvar" prefWidth="90" text="Salvar" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" />
+            <Button onAction="#aoLimpar" prefWidth="90" text="Limpar" style="-fx-background-color: #95a5a6; -fx-text-fill: white;" />
+        </HBox>
+        <Button onAction="#irParaVendas" text="Voltar para vendas" style="-fx-background-color: #34495e; -fx-text-fill: white;" />
+    </VBox>
+
+    <VBox spacing="14" HBox.hgrow="ALWAYS">
+        <Label text="Cupons cadastrados" textFill="#2c3e50"><font><Font name="System Bold" size="18" /></font></Label>
+        <TableView fx:id="tabelaCupons" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" prefWidth="55" text="ID" />
+                <TableColumn fx:id="colCodigo" prefWidth="190" text="Nome" />
+                <TableColumn fx:id="colPorcentagem" prefWidth="120" text="Desconto" />
+                <TableColumn fx:id="colDataValidade" prefWidth="145" text="Validade" />
+                <TableColumn fx:id="colSituacao" prefWidth="110" text="Situação" />
+            </columns>
+        </TableView>
+        <HBox spacing="10">
+            <Button onAction="#aoEditar" text="Editar selecionado" style="-fx-background-color: #3498db; -fx-text-fill: white;" />
+            <Button onAction="#aoExcluir" text="Excluir selecionado" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" />
+        </HBox>
+    </VBox>
+</HBox>

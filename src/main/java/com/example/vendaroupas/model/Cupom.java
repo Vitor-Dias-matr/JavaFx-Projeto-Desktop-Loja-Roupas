@@ -8,24 +8,26 @@ public class Cupom {
     private double porcentagemDesconto;
     private int quantidade;
     private LocalDateTime dataValidade;
+    private boolean ativo;
 
     // Construtor Padrão
     public Cupom() {}
 
     // Construtor Completo
-    public Cupom(int id, String codigo, double porcentagemDesconto, int quantidade, LocalDateTime dataValidade) {
+    public Cupom(int id, String codigo, double porcentagemDesconto, int quantidade,
+                 LocalDateTime dataValidade, boolean ativo) {
         this.id = id;
         this.codigo = codigo;
-        this.porcentagemDesconto = Math.min(porcentagemDesconto, 100.0); // Proteção para não passar de 100%
+        this.porcentagemDesconto = Math.min(porcentagemDesconto, 100.0);
         this.quantidade = quantidade;
         this.dataValidade = dataValidade;
+        this.ativo = ativo;
     }
 
     // Regra de Negócio: Verifica se o cupom pode ser usado
     public boolean isValid() {
-        boolean temEstoque = this.quantidade > 0;
         boolean dentroDaValidade = (this.dataValidade == null || this.dataValidade.isAfter(LocalDateTime.now()));
-        return temEstoque && dentroDaValidade;
+        return this.ativo && dentroDaValidade;
     }
 
     // Getters e Setters
@@ -43,4 +45,8 @@ public class Cupom {
 
     public LocalDateTime getDataValidade() { return dataValidade; }
     public void setDataValidade(LocalDateTime dataValidade) { this.dataValidade = dataValidade; }
+
+    public boolean isAtivo() { return ativo; }
+    public boolean getAtivo() { return ativo; }
+    public void setAtivo(boolean ativo) { this.ativo = ativo; }
 }

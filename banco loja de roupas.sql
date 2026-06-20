@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS cupom (
     codigo VARCHAR(50) NOT NULL UNIQUE,
     porcentagem_desconto DECIMAL(5,2) NOT NULL, -- Ex: 10.00 para 10%
     quantidade INT NOT NULL DEFAULT 0,
-    data_validade TIMESTAMP NULL
+    data_validade TIMESTAMP NULL,
+    situacao BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 -- 3. Tabela de Vendas (Cabeçalho da Venda)

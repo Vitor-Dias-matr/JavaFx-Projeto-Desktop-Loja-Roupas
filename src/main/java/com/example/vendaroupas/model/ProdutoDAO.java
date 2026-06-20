@@ -115,7 +115,6 @@ public class ProdutoDAO {
         String sqlVenda = "INSERT INTO venda (subtotal, desconto, total, forma_pagamento, cupom_id) VALUES (?, ?, ?, ?, ?)";
         String sqlItem = "INSERT INTO item_venda (venda_id, produto_id, quantidade, preco_unitario) VALUES (?, ?, ?, ?)";
         String sqlAtualizaEstoque = "UPDATE produto SET quantidade = quantidade - ? WHERE id = ?";
-        String sqlAtualizaCupom = "UPDATE cupom SET quantidade = quantidade - 1 WHERE id = ?";
 
         Connection conn = null;
         try {
@@ -159,14 +158,6 @@ public class ProdutoDAO {
                 }
                 stmtItem.executeBatch();
                 stmtEstoque.executeBatch();
-            }
-
-            // 3. Atualiza quantidade disponível do Cupom (se houver)
-            if (cupomAplicado != null) {
-                try (PreparedStatement stmtCupom = conn.prepareStatement(sqlAtualizaCupom)) {
-                    stmtCupom.setInt(1, cupomAplicado.getId());
-                    stmtCupom.executeUpdate();
-                }
             }
 
             conn.commit(); // Confirma todas as operações juntas no banco
