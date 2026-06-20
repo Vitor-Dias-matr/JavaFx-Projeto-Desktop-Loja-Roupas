@@ -1,4 +1,4 @@
-package com.example.vendaroupas;
+package com.example.vendaroupas.view;
 
 import javafx.application.Application;
 

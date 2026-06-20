@@ -1,4 +1,4 @@
-package com.example.vendaroupas.repository;
+package com.example.vendaroupas.model;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;

@@ -1,10 +1,11 @@
-package com.example.vendaroupas.controller;
+package com.example.vendaroupas.view;
 
 import com.example.vendaroupas.model.Cupom;
 import com.example.vendaroupas.model.ItemVenda;
 import com.example.vendaroupas.model.Produto;
 import com.example.vendaroupas.model.Venda;
-import com.example.vendaroupas.repository.ProdutoDAO;
+import com.example.vendaroupas.controller.NavegacaoController;
+import com.example.vendaroupas.model.ProdutoDAO;
 
 // IMPORTS QUE ESTAVAM FALTANDO:
 import java.net.URL;
@@ -17,9 +18,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class VendaController implements Initializable { // CORREÇÃO: Adicionado implements Initializable
+public class VendaViewController implements Initializable {
 
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final NavegacaoController navegacaoController = new NavegacaoController();
 
     // Componentes injetados do arquivo FXML
     @FXML private TableView<ItemVenda> tabelaCarrinho;
@@ -183,19 +185,8 @@ public class VendaController implements Initializable { // CORREÇÃO: Adicionad
     @FXML
     public void irParaGerenciarProdutos() {
         try {
-            // 1. Pega a janela (Stage) atual a partir de qualquer componente da tela
             javafx.stage.Stage stage = (javafx.stage.Stage) cbFormaPagamento.getScene().getWindow();
-
-            // 2. Aponta para o arquivo FXML da tela de estoque (certifique-se de que o nome está idêntico)
-            javafx.fxml.FXMLLoader fxmlLoader = new javafx.fxml.FXMLLoader(
-                    getClass().getResource("/com/example/vendaroupas/gerenciar-produtos.fxml")
-            );
-
-            // 3. Carrega a nova cena mantendo o tamanho padrão do seu projeto
-            javafx.scene.Scene scene = new javafx.scene.Scene(fxmlLoader.load(), 1024, 600);
-
-            stage.setTitle("Sistema de Loja - Gerenciar Estoque");
-            stage.setScene(scene);
+            navegacaoController.exibirTelaProdutos(stage);
         } catch (Exception e) {
             e.printStackTrace();
             exibirAlerta(Alert.AlertType.ERROR, "Erro de Navegação",

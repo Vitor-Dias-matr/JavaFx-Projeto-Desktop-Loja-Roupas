@@ -10,16 +10,14 @@ module com.example.vendaroupas {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
 
-    // Permite que o JavaFX acesse a classe Main/Application
-    opens com.example.vendaroupas to javafx.fxml;
-    exports com.example.vendaroupas;
+    // View: telas, aplicação JavaFX e controladores ligados aos arquivos FXML.
+    opens com.example.vendaroupas.view to javafx.fxml;
+    exports com.example.vendaroupas.view;
 
-    // --- ADICIONE ESTAS DUAS LINHAS ABAIXO ---
-    // Permite que o FXMLLoader instancie e injete os componentes no seu Controller
-    opens com.example.vendaroupas.controller to javafx.fxml;
+    // Controller: fluxo de navegação entre View e Model.
     exports com.example.vendaroupas.controller;
 
-    // Permite que as tabelas (TableView) acessem os atributos da classe Produto
+    // Model: entidades, regras de negócio e acesso aos dados.
     opens com.example.vendaroupas.model to javafx.base;
     exports com.example.vendaroupas.model;
 }

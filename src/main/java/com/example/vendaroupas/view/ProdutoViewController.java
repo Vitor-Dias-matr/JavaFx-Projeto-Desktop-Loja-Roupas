@@ -1,8 +1,9 @@
-package com.example.vendaroupas.controller;
+package com.example.vendaroupas.view;
 
 import com.example.vendaroupas.model.Categoria;
 import com.example.vendaroupas.model.Produto;
-import com.example.vendaroupas.repository.ProdutoDAO;
+import com.example.vendaroupas.controller.NavegacaoController;
+import com.example.vendaroupas.model.ProdutoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProdutoController implements Initializable {
+public class ProdutoViewController implements Initializable {
 
     @FXML private TextField txtNome;
     @FXML private ComboBox<Categoria> cbCategoria;
@@ -33,6 +34,7 @@ public class ProdutoController implements Initializable {
     @FXML private TableColumn<Produto, Integer> colQuantidade;
 
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final NavegacaoController navegacaoController = new NavegacaoController();
     private ObservableList<Produto> listaControle;
     private Produto produtoSelecionado = null;
 
@@ -149,22 +151,10 @@ public class ProdutoController implements Initializable {
     @FXML
     public void irParaVendas() {
         try {
-            // 1. Pega a janela atual a partir de um dos seus campos de texto
             javafx.stage.Stage stage = (javafx.stage.Stage) txtNome.getScene().getWindow();
-
-            // 2. Aponta de volta para o FXML da tela de vendas
-            javafx.fxml.FXMLLoader fxmlLoader = new javafx.fxml.FXMLLoader(
-                    getClass().getResource("/com/example/vendaroupas/efetuar-venda.fxml")
-            );
-
-            // 3. Define a cena de vendas
-            javafx.scene.Scene scene = new javafx.scene.Scene(fxmlLoader.load(), 1024, 600);
-
-            stage.setTitle("Sistema de Vendas - Caixa Aberto");
-            stage.setScene(scene);
+            navegacaoController.exibirTelaVendas(stage);
         } catch (Exception e) {
             e.printStackTrace();
-            // Caso não tenha o método exibirAlerta no ProdutoController, use um básico:
             javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
             alert.setTitle("Erro de Navegação");
             alert.setContentText("Não foi possível voltar para a tela de vendas: " + e.getMessage());

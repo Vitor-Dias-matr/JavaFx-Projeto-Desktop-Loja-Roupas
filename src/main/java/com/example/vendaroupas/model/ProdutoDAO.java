@@ -1,6 +1,4 @@
-package com.example.vendaroupas.repository;
-
-import com.example.vendaroupas.model.*;
+package com.example.vendaroupas.model;
 
 import java.sql.*;
 import java.util.ArrayList;
